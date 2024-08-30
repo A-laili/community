@@ -22,4 +22,5 @@ class FeedItem {
     this.comments = 0,  // Default to 0 comments
     this.shares = 0,  // Default to 0 shares
   });
+
 }

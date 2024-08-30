@@ -110,17 +110,8 @@ class _VideoDetailCardState extends State<VideoDetailCard> {
 
   void _incrementLikes() {
     setState(() {
-      widget.feedItem.likes += 1; // Increment likes count
+      widget.feedItem.likes += 1;
     });
-  }
-
-  void _navigateToComments() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => CommentPage(feedItem: widget.feedItem),
-      ),
-    );
   }
 
   @override
@@ -140,7 +131,7 @@ class _VideoDetailCardState extends State<VideoDetailCard> {
         else
           Center(child: CircularProgressIndicator()),
         Positioned(
-          bottom: 80,
+          bottom: 60,
           left: 20,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,44 +151,48 @@ class _VideoDetailCardState extends State<VideoDetailCard> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: _incrementLikes,
-                    child: Row(
-                      children: [
-                        Icon(Icons.thumb_up, color: Colors.white),
-                        SizedBox(width: 5),
-                        Text(
-                          '${widget.feedItem.likes}',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
+            ],
+          ),
+        ),
+        Positioned(
+          bottom: 60,
+          right: 20,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: _incrementLikes,
+                child: Column(
+                  children: [
+                    Icon(Icons.thumb_up, color: Colors.white, size: 30),
+                    SizedBox(height: 5),
+                    Text(
+                      '${widget.feedItem.likes}',
+                      style: TextStyle(color: Colors.white),
                     ),
-                  ),
-                  SizedBox(width: 20),
-                  GestureDetector(
-                    onTap: _navigateToComments,
-                    child: Row(
-                      children: [
-                        Icon(Icons.comment, color: Colors.white),
-                        SizedBox(width: 5),
-                        Text(
-                          '${widget.feedItem.comments}',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
+                  ],
+                ),
+              ),
+              SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CommentBottomSheet(feedItem: widget.feedItem);
+                    },
+                  );
+                },
+                child: Column(
+                  children: [
+                    Icon(Icons.comment, color: Colors.white, size: 30),
+                    SizedBox(height: 5),
+                    Text(
+                      '${widget.feedItem.comments}',
+                      style: TextStyle(color: Colors.white),
                     ),
-                  ),
-                  SizedBox(width: 20),
-                  Icon(Icons.share, color: Colors.white),
-                  SizedBox(width: 5),
-                  Text(
-                    '${widget.feedItem.shares}',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
